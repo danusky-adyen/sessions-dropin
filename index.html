@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Checkout</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Product Checkout</h1>
+    </header>
+    <main>
+        <section id="products">
+            <h2>Available Products</h2>
+            <div class="product" data-id="1">
+                <h3>Product 1</h3>
+                <p>Description of Product 1</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            <div class="product" data-id="2">
+                <h3>Product 2</h3>
+                <p>Description of Product 2</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            <!-- Add more products as needed -->
+        </section>
+        <section id="cart">
+            <h2>Shopping Cart</h2>
+            <ul id="cart-items">
+                <!-- Cart items will be dynamically added here -->
+            </ul>
+            <p>Total: <span id="total">0.00</span></p>
+            <button id="checkout">Checkout</button>
+        </section>
+        <section id="adyen-checkout">
+            <h2>Adyen Drop-in Checkout</h2>
+            <div id="dropin-container"></div>
+        </section>
+    </main>
+    <script src="https://checkout.adyen.com/checkout.js"></script>
+    <script>
+        // JavaScript code for managing cart and Adyen checkout will go here
+        const addToCartButtons = document.querySelectorAll('.add-to-cart');
+        const cartItems = document.getElementById('cart-items');
+        const totalDisplay = document.getElementById('total');
+        let total = 0;
+
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const productElement = button.parentElement;
+                const price = 10.00; // Example price
+                const productId = productElement.dataset.id;
+                const productName = productElement.querySelector('h3').innerText;
+                total += price;
+                totalDisplay.innerText = total.toFixed(2);
+                const listItem = document.createElement('li');
+                listItem.innerText = productName + ' - $' + price.toFixed(2);
+                cartItems.appendChild(listItem);
+            });
+        });
+
+        document.getElementById('checkout').addEventListener('click', () => {
+            // Trigger the Adyen checkout process here
+        });
+    </script>
+</body>
+</html>
